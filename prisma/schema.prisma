@@ -1,0 +1,23 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// In the FrontendMaster AI NextJs course, we need to set "relationMode" on Prisma explicitly. 
+// Now we are using NeonDB so it is not needed
+// ChatGPT gives a good explanation: https://chatgpt.com/c/d1fc6e68-f30e-4375-bb49-8da40b28c36a
+
+// Define the Models 
+model User {
+  id String @id @default(uuid())
+}
