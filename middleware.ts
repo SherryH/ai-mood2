@@ -10,7 +10,7 @@ export const config = {
   ],
 }
 
-const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)'])
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/'])
 
 export default clerkMiddleware((auth, request) => {
   console.log({ request })
