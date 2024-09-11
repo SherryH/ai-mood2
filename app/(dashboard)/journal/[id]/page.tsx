@@ -33,7 +33,7 @@ type EntryPageType = {
 const EntryPage = async ({ params }: { params: EntryPageType }) => {
   const entry = await getEntry(params.id)
   return (
-    <div>
+    <div className="h-full">
       <Editor entry={entry} />
     </div>
   )
