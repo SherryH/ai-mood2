@@ -1,3 +1,5 @@
+// this auth is used on the server side, not on client side
+
 // We will use our DB User id for business logic, instead of using clerk id
 // "Dependency Inversion" principle - loose coupling
 import { auth } from '@clerk/nextjs/server'
