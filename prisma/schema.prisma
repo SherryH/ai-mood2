@@ -41,7 +41,7 @@ model JournalEntry {
 
   analysis Analysis?
 
-  @@index([userId])
+  @@unique([userId,id]) //Both userId and id are needed to uniquely find a journalEntry
 }
 
 model Analysis {
