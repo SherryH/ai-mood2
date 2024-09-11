@@ -5,6 +5,7 @@ import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
 import { getUserFromClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
+import Link from 'next/link'
 
 // We want to get journal entries from userId, not from clerkId. So we don't use currentUser() from clerk here
 
@@ -42,7 +43,9 @@ export default async function Journal() {
       <div className="grid grid-cols-3 gap-4">
         <NewEntryCard />
         {entries.map((entry) => (
-          <EntryCard key={entry.id} entry={entry} />
+          <Link href={`/journal/${entry.id}`} key={entry.id}>
+            <EntryCard entry={entry} />
+          </Link>
         ))}
       </div>
     </div>
