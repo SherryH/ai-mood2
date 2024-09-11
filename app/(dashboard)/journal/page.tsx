@@ -32,7 +32,6 @@ const getEntries = async () => {
 
 export default async function Journal() {
   const entries = await getEntries()
-  console.log({ entries })
   // brand new user gets redirected here
   // using Clerk API, we check no such person exists
   // then sign him/her up

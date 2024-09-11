@@ -13,9 +13,7 @@ export const config = {
 const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)', '/'])
 
 export default clerkMiddleware((auth, request) => {
-  console.log({ request })
   if (!isPublicRoute(request)) {
-    console.log({ request })
     auth().protect()
   }
 })
