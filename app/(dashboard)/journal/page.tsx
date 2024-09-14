@@ -3,6 +3,7 @@
 
 import EntryCard from '@/components/EntryCard'
 import NewEntryCard from '@/components/NewEntryCard'
+import { analyse } from '@/utils/ai'
 import { getUserFromClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 import Link from 'next/link'
@@ -19,6 +20,10 @@ const getEntries = async () => {
       createdAt: 'desc',
     },
   })
+
+  await analyse(
+    'I am finally making progress in the FrontendMasters course! yay!'
+  )
 
   return entries
 }
