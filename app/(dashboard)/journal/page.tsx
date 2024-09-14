@@ -21,9 +21,10 @@ const getEntries = async () => {
     },
   })
 
-  await analyse(
+  const result = await analyse(
     'I am finally making progress in the FrontendMasters course! yay!'
   )
+  console.log({ result })
 
   return entries
 }
