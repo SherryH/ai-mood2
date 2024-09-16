@@ -2,6 +2,7 @@ import { OpenAI } from '@langchain/openai'
 import { StructuredOutputParser } from 'langchain/output_parsers'
 import { PromptTemplate } from '@langchain/core/prompts'
 import z from 'zod'
+import { Analysis } from '@prisma/client'
 
 const analysisSchema = z.object({
   mood: z
@@ -35,13 +36,20 @@ const getPrompt = async (content: string) => {
   return input
 }
 
+type AnalysisWithoutAutoFields = Omit<
+  Analysis,
+  'id' | 'createdAt' | 'updatedAt' | 'entryId'
+>
+
+// conditional typing depending whether there is an error
+
 export const analyse = async (content: string) => {
   const prompt = await getPrompt(content)
   const model = new OpenAI({ temperature: 0, modelName: 'gpt-4o-mini' })
   const result = await model.invoke(prompt)
 
   try {
-    return parser.parse(result)
+    return (await parser.parse(result)) as AnalysisWithoutAutoFields
   } catch (e) {
     console.log(e)
   }

@@ -52,9 +52,10 @@ model Analysis {
   entryId String
   entry   JournalEntry @relation(fields: [entryId], references: [id])
 
-  mood     String
+  mood     String  @db.Text
+  subject  String  @db.Text
   summary  String  @db.Text
-  color    String
+  color    String  @db.Text
   negative Boolean
 
   @@unique([entryId]) // one to one relationship Analysis - JournalEntry
