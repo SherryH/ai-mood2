@@ -44,6 +44,8 @@ export const PATCH = async (request: Request, { params }: ParamType) => {
     },
   })
 
+  revalidatePath(`/journal/${updatedJournalEntry.id}`)
+
   return NextResponse.json({
     data: { ...updatedJournalEntry, analysis: savedAnalysis },
   })
