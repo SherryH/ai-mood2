@@ -1,5 +1,6 @@
 // enable CRUD API like /api/journal POST
 
+import { analyse } from '@/utils/ai'
 import { getUserFromClerkId } from '@/utils/auth'
 import { prisma } from '@/utils/db'
 import { revalidatePath } from 'next/cache'
@@ -12,6 +13,15 @@ export const POST = async () => {
     data: {
       userId: user.id,
       content: 'Please write about your day!',
+    },
+  })
+
+  const analysisResult = await analyse(journalEntry.content)
+  if (!analysisResult) return
+  await prisma.analysis.create({
+    data: {
+      entryId: journalEntry.id,
+      ...analysisResult,
     },
   })
   revalidatePath('/journal')
