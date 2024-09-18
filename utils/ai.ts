@@ -2,7 +2,11 @@ import { OpenAI } from '@langchain/openai'
 import { StructuredOutputParser } from 'langchain/output_parsers'
 import { PromptTemplate } from '@langchain/core/prompts'
 import z from 'zod'
-import { Analysis } from '@prisma/client'
+import { Analysis, JournalEntry } from '@prisma/client'
+import { Document } from 'langchain/document'
+import { loadQARefineChain } from 'langchain/chains'
+import { OpenAIEmbeddings } from '@langchain/openai'
+import { MemoryVectorStore } from 'langchain/vectorstores/memory'
 
 const analysisSchema = z.object({
   mood: z
@@ -53,4 +57,25 @@ export const analyse = async (content: string) => {
   } catch (e) {
     console.log(e)
   }
+}
+
+export const qa = async (question: string, entries: JournalEntry[]) => {
+  const docs = entries.map(
+    (entry) =>
+      new Document({
+        pageContent: entry.content,
+        metadata: { source: entry.id, date: entry.createdAt },
+      })
+  )
+  const model = new OpenAI({ temperature: 0, modelName: 'gpt-4o-mini' })
+  const chain = loadQARefineChain(model)
+  const embeddings = new OpenAIEmbeddings()
+  const store = await MemoryVectorStore.fromDocuments(docs, embeddings)
+  const relevantDocs = await store.similaritySearch(question)
+  const res = await chain.invoke({
+    input_documents: relevantDocs,
+    question,
+  })
+
+  return res.output_text
 }
