@@ -57,6 +57,7 @@ model Analysis {
   summary  String  @db.Text
   color    String  @db.Text
   negative Boolean
+  sentimentScore Float @default(0)
 
   @@unique([entryId]) // one to one relationship Analysis - JournalEntry
 }

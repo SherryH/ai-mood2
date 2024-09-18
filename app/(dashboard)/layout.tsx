@@ -4,6 +4,7 @@ import Link from 'next/link'
 const links = [
   { href: '/', label: 'Home' },
   { href: '/journal', label: 'Journal' },
+  { href: '/history', label: 'History' },
 ]
 
 // The sharable components on the Dashboard like Navbar will stay static. No flashing issue
