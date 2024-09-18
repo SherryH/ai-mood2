@@ -24,7 +24,7 @@ const AnalysisPanel = ({ analysis }: AnalysisType) => {
         <ul>
           {analysisData.map((item) => (
             <li
-              key={item.value}
+              key={item.name}
               className="flex items-center justify-between px-2 py-4 border-b border-black/10"
             >
               <span className="text-lg font-semibold">{item.name}</span>

@@ -27,6 +27,8 @@ model User {
   email   String @unique
 
   entries JournalEntry[]
+
+  analyses Analysis[]
 }
 
 model JournalEntry {
@@ -50,7 +52,10 @@ model Analysis {
   updatedAt DateTime @updatedAt
 
   entryId String
-  entry   JournalEntry @relation(fields: [entryId], references: [id])
+  entry   JournalEntry @relation(fields: [entryId], references: [id], onDelete: Cascade) // when the entry is deleted, this analysis is also deleted
+
+  userId String
+  user User @relation(fields: [userId], references:[id], onDelete: Cascade)
 
   mood     String  @db.Text
   subject  String  @db.Text
@@ -60,4 +65,8 @@ model Analysis {
   sentimentScore Float @default(0)
 
   @@unique([entryId]) // one to one relationship Analysis - JournalEntry
+
+  @@index([userId]) // Creates an index on 'userId' for faster querying
+  //In this case, the @@index([userId]) would optimize queries like:
+  // SELECT * FROM Analysis WHERE userId = 123;
 }
