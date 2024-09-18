@@ -59,7 +59,9 @@ export const analyse = async (content: string) => {
   }
 }
 
-export const qa = async (question: string, entries: JournalEntry[]) => {
+type Entries = Pick<JournalEntry, 'id' | 'content' | 'createdAt'>
+
+export const qa = async (question: string, entries: Entries[]) => {
   const docs = entries.map(
     (entry) =>
       new Document({
